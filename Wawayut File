@@ -1,0 +1,97 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Wawayut Hub Script",
+    LoadingTitle = "Loading Wawayut Scripts",
+    LoadingSubtitle = "by Wawayut",
+    ShowText = "Rayfield",
+    Theme = "LightTheme",
+    ToggleUIKeybind = Enum.KeyCode.K,
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "WawayutHub",
+        FileName = "BigHub"
+    },
+    KeySystem = true,
+    KeySettings = {
+        Title = "Untitled",
+        Subtitle = "Key System",
+        Note = "Like And Sub For Key -- Mark Christian Gamilla Laraga",
+        FileName = "Key",
+        SaveKey = false,
+        GrabKeyFromSite = false,
+        Key = {"Mark"}
+    }
+})
+
+-- Admin Tab
+local AdminTab = Window:CreateTab("Admin Script", 4483362458)
+
+AdminTab:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+-- Exploits Tab
+local ExploitsTab = Window:CreateTab("Free Gamepass", 4483362458)
+
+ExploitsTab:CreateButton({
+    Name = "Free Gamepass",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-dev-product-33218"))()
+    end
+})
+
+-- Control Tab
+local ControlTab = Window:CreateTab("Control", 4483362458)
+
+-- Walkspeed Slider
+ControlTab:CreateSlider({
+    Name = "Walkspeed",
+    Range = {10, 100},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end
+})
+
+-- Infinite Jump
+ControlTab:CreateButton({
+    Name = "Infinite Jump",
+    Callback = function()
+        local Player = game:GetService("Players").LocalPlayer
+        local UIS = game:GetService("UserInputService")
+        UIS.JumpRequest:Connect(function()
+            Player.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+        end)
+    end
+})
+
+-- Noclip
+ControlTab:CreateButton({
+    Name = "Noclip (Toggle with N)",
+    Callback = function()
+        local noclip = false
+        local plr = game.Players.LocalPlayer
+        local char = plr.Character or plr.CharacterAdded:Wait()
+        
+        game:GetService("RunService").Stepped:Connect(function()
+            if noclip and char then
+                for _, part in pairs(char:GetDescendants()) do
+                    if part:IsA("BasePart") and part.CanCollide == true then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        end)
+
+        game:GetService("UserInputService").InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.N then
+                noclip = not noclip
+            end
+        end)
+    end
+})
